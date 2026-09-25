@@ -17,7 +17,7 @@ public class ElevarWheel : MonoBehaviour
     void Start()
     {
         // Guardar la posición actual como punto 0
-        posicionInicialY = objeto.localPosition.y;
+        posicionInicialY = objeto.localPosition.z;
     }
 
     void Update()
@@ -44,7 +44,7 @@ public class ElevarWheel : MonoBehaviour
         // Mantener X y Z y modificar solamente Y
         Vector3 posicion = objeto.localPosition;
 
-        posicion.y = posicionInicialY + altura;
+        posicion.z = posicionInicialY + altura;
 
         objeto.localPosition = posicion;
     }

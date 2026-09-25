@@ -1,41 +1,50 @@
-using UnityEngine;
+﻿using UnityEngine;
 using UnityEngine.XR.Content.Interaction;
 
 public class RotacionJ : MonoBehaviour
 {
     public XRJoystick joystick;
 
+    [Header("OBJETOS DE ROTACIÓN")]
+    public Transform objetoHorizontal;
+    public Transform objetoVertical;
+
+    [Header("VELOCIDAD")]
     public float velocidadHorizontal = 50f;
     public float velocidadVertical = 50f;
 
+    [Header("LÍMITES HORIZONTALES")]
+    public float limiteHorizontalIzquierda = -90f;
+    public float limiteHorizontalDerecha = 90f;
+
+    [Header("LÍMITES VERTICALES")]
     public float limiteArriba = 30f;
     public float limiteAbajo = -30f;
 
-    private float rotacionX;
-    private float rotacionY;
+    // Rotación relativa a la posición inicial
+    private float rotacionHorizontal = 0f;
+    private float rotacionVertical = 0f;
+
+    // Rotación inicial de cada objeto
+    private Quaternion rotacionInicialHorizontal;
+    private Quaternion rotacionInicialVertical;
 
     [Header("DISPARO")]
-
     public GameObject objetoDisparo;
     public GameObject objetoNuevo;
 
     public string tagObjetivo = "ObjetoPeligroso";
 
-    public float cooldown = 4f;
     private bool puedeDisparar = true;
 
     void Start()
     {
-        Vector3 rotacionInicial = transform.localEulerAngles;
+        // La rotación actual se considera 0
+        if (objetoHorizontal != null)
+            rotacionInicialHorizontal = objetoHorizontal.localRotation;
 
-        rotacionX = rotacionInicial.x;
-        rotacionY = rotacionInicial.y;
-
-        if (rotacionX > 90f)
-            rotacionX -= 180f;
-
-        if (rotacionY > 90f)
-            rotacionY -= 180f;
+        if (objetoVertical != null)
+            rotacionInicialVertical = objetoVertical.localRotation;
 
         if (objetoDisparo != null)
             objetoDisparo.SetActive(false);
@@ -46,16 +55,55 @@ public class RotacionJ : MonoBehaviour
         float horizontal = joystick.value.x;
         float vertical = joystick.value.y;
 
-        rotacionY += horizontal * velocidadHorizontal * Time.deltaTime;
-        rotacionX -= vertical * velocidadVertical * Time.deltaTime;
+        // =========================
+        // HORIZONTAL → ROTACIÓN Z
+        // =========================
 
-        rotacionX = Mathf.Clamp(rotacionX, limiteAbajo, limiteArriba);
+        rotacionHorizontal -= horizontal *
+                              velocidadHorizontal *
+                              Time.deltaTime;
 
-        transform.localRotation = Quaternion.Euler(
-            rotacionX,
-            rotacionY,
-            0f
+        rotacionHorizontal = Mathf.Clamp(
+            rotacionHorizontal,
+            limiteHorizontalIzquierda,
+            limiteHorizontalDerecha
         );
+
+        if (objetoHorizontal != null)
+        {
+            objetoHorizontal.localRotation =
+                rotacionInicialHorizontal *
+                Quaternion.Euler(
+                    0f,
+                    0f,
+                    rotacionHorizontal
+                );
+        }
+
+        // =========================
+        // VERTICAL → ROTACIÓN X
+        // =========================
+
+        rotacionVertical -= vertical *
+                            velocidadVertical *
+                            Time.deltaTime;
+
+        rotacionVertical = Mathf.Clamp(
+            rotacionVertical,
+            limiteAbajo,
+            limiteArriba
+        );
+
+        if (objetoVertical != null)
+        {
+            objetoVertical.localRotation =
+                rotacionInicialVertical *
+                Quaternion.Euler(
+                    rotacionVertical,
+                    0f,
+                    0f
+                );
+        }
     }
 
     public void Disparar()
