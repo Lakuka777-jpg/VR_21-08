@@ -1085,7 +1085,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 2216316184551073583, guid: 33e236dc45053f54b8fced4f04496806, type: 3}
       propertyPath: velocidadHorizontal
-      value: 4
+      value: 10
       objectReference: {fileID: 0}
     - target: {fileID: 4177840275460964032, guid: 33e236dc45053f54b8fced4f04496806, type: 3}
       propertyPath: ShapeModule.radius.value
@@ -1094,6 +1094,14 @@ PrefabInstance:
     - target: {fileID: 4506870384511999258, guid: 33e236dc45053f54b8fced4f04496806, type: 3}
       propertyPath: m_Name
       value: Tank (1)
+      objectReference: {fileID: 0}
+    - target: {fileID: 5117767604614414523, guid: 33e236dc45053f54b8fced4f04496806, type: 3}
+      propertyPath: m_Range
+      value: 61.42
+      objectReference: {fileID: 0}
+    - target: {fileID: 5117767604614414523, guid: 33e236dc45053f54b8fced4f04496806, type: 3}
+      propertyPath: m_Intensity
+      value: 1000
       objectReference: {fileID: 0}
     - target: {fileID: 6455733075996376726, guid: 33e236dc45053f54b8fced4f04496806, type: 3}
       propertyPath: m_LocalPosition.x
