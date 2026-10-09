@@ -11,11 +11,12 @@ TagManager:
   - Destroyer
   - ObjetoPeligroso
   - batery
+  - enemigo
   layers:
   - Default
   - TransparentFX
   - Ignore Raycast
-  - 
+  - Enemy
   - Water
   - UI
   - 
