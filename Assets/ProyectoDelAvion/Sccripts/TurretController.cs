@@ -102,7 +102,6 @@ public class TurretController : MonoBehaviour
             return;
         }
 
-        // Raycast
         Ray ray = new Ray(firePoint.position, firePoint.forward);
         RaycastHit hit;
 
@@ -113,18 +112,16 @@ public class TurretController : MonoBehaviour
             {
                 Debug.Log($"¡IMPACTO en enemigo! ? {hit.collider.gameObject.name}  (distancia: {hit.distance:F2}m)");
 
-                // Aquí puedes añadir daño, efectos, etc.
-                // Ejemplo:
-                // hit.collider.GetComponent<EnemyHealth>()?.TakeDamage(10);
-            }
-            else
-            {
-                // Opcional: ver qué más está tocando el raycast
-                // Debug.Log($"Raycast tocó: {hit.collider.name}");
+                // Desactivamos el collider para que no vuelva a detectar el mismo enemigo
+                hit.collider.enabled = false;
+
+                // Opcional: si quieres desactivar TODOS los colliders del enemigo (por si tiene varios)
+                // Collider[] allColliders = hit.collider.GetComponentsInChildren<Collider>();
+                // foreach (var col in allColliders) col.enabled = false;
             }
         }
 
-        // Visualización del raycast en el editor
+        // Visualización del raycast
         if (showRay)
         {
             Debug.DrawRay(firePoint.position, firePoint.forward * range, rayColor, fireRate);
