@@ -17,11 +17,20 @@ public class TurretController : MonoBehaviour
     [SerializeField] private bool showRay = true;
     [SerializeField] private Color rayColor = Color.red;
 
-    private bool isGrabbed = false;
-    private float nextFireTime = 0f;
+    [Header("Restricciones de rotación")]
+    [SerializeField] private bool freezeRotationX = false;
+    [SerializeField] private bool freezeRotationY = false;
+    [SerializeField] private bool freezeRotationZ = true;   // normalmente sí congelamos el roll
+
+    private Rigidbody rb;
 
     private void Awake()
     {
+        rb = GetComponent<Rigidbody>();
+
+        // ... el resto del Awake que ya tenías ...
+
+        ApplyConstraints();
         if (grabInteractable == null)
             grabInteractable = GetComponent<XRGrabInteractable>();
 
@@ -29,6 +38,30 @@ public class TurretController : MonoBehaviour
         grabInteractable.selectEntered.AddListener(OnGrabbed);
         grabInteractable.selectExited.AddListener(OnReleased);
     }
+
+    private void ApplyConstraints()
+    {
+        if (rb == null) return;
+
+        RigidbodyConstraints constraints = RigidbodyConstraints.None;
+
+        // Posición siempre congelada (recomendado)
+        constraints |= RigidbodyConstraints.FreezePositionX;
+        constraints |= RigidbodyConstraints.FreezePositionY;
+        constraints |= RigidbodyConstraints.FreezePositionZ;
+
+        // Rotaciones
+        if (freezeRotationX) constraints |= RigidbodyConstraints.FreezeRotationX;
+        if (freezeRotationY) constraints |= RigidbodyConstraints.FreezeRotationY;
+        if (freezeRotationZ) constraints |= RigidbodyConstraints.FreezeRotationZ;
+
+        rb.constraints = constraints;
+    }
+
+    private bool isGrabbed = false;
+    private float nextFireTime = 0f;
+
+  
 
     private void OnDestroy()
     {
