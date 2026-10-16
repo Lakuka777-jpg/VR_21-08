@@ -112,6 +112,7 @@ public class TurretController : MonoBehaviour
             {
                 Debug.Log($"¡IMPACTO en enemigo! ? {hit.collider.gameObject.name}  (distancia: {hit.distance:F2}m)");
 
+             
                 // Desactivamos el collider para que no vuelva a detectar el mismo enemigo
                 hit.collider.enabled = false;
 
