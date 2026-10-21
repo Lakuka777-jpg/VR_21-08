@@ -5,9 +5,15 @@ EditorBuildSettings:
   m_ObjectHideFlags: 0
   serializedVersion: 2
   m_Scenes:
-  - enabled: 1
+  - enabled: 0
     path: Assets/Scenes/SampleScene.unity
     guid: 99c9720ab356a0642a771bea13969a05
+  - enabled: 1
+    path: Assets/Scenes/Menu principal.unity
+    guid: c76b51a819402de4584c965a5102a5df
+  - enabled: 1
+    path: Assets/Scenes/AvionEpico.unity
+    guid: d4f156ca049197142b22870ed15ede2c
   m_configObjects:
     com.unity.input.settings.actions: {fileID: -944628639613478452, guid: 052faaac586de48259a63d0c4782560b, type: 3}
     com.unity.xr.management.loader_settings: {fileID: 11400000, guid: bdc89fc023770f147aa30daee7fcf785, type: 2}
