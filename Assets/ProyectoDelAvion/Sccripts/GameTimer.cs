@@ -66,6 +66,9 @@ public class GameTimer : MonoBehaviour
 
         // Posicionar inmediatamente
         SeguirMirada();
+
+        // Dentro de TerminarJuego()
+        FindObjectOfType<WaveManager>()?.DetenerOleadas();
     }
 
     void SeguirMirada()
