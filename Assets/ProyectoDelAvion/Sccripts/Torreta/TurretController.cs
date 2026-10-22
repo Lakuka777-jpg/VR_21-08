@@ -1,42 +1,74 @@
-using UnityEngine;
+ï»¿using UnityEngine;
 using UnityEngine.XR.Interaction.Toolkit;
 using UnityEngine.XR.Interaction.Toolkit.Interactables;
+using System.Collections;
 
 public class TurretController : MonoBehaviour
 {
     [Header("Referencias")]
-    [SerializeField] private Transform firePoint;          // Punto desde donde sale el raycast (cañón)
+    [SerializeField] private Transform firePoint;
     [SerializeField] private XRGrabInteractable grabInteractable;
+    [SerializeField] private LineRenderer lineRenderer;
 
-    [Header("Configuración de disparo")]
-    [SerializeField] private float fireRate = 0.15f;       // Tiempo entre disparos
-    [SerializeField] private float range = 50f;            // Alcance del raycast
-    [SerializeField] private LayerMask hitLayers = ~0;     // Capas que puede detectar (todo por defecto)
+    [Header("ConfiguraciÃ³n de disparo")]
+    [SerializeField] private float fireRate = 0.15f;
+    [SerializeField] private float range = 50f;
+    [SerializeField] private LayerMask hitLayers = ~0;
+    [SerializeField] private float laserDuration = 0.08f;
 
     [Header("Debug")]
     [SerializeField] private bool showRay = true;
-    [SerializeField] private Color rayColor = Color.red;
 
-    [Header("Restricciones de rotación")]
+    [Header("Restricciones de rotaciÃ³n")]
     [SerializeField] private bool freezeRotationX = false;
     [SerializeField] private bool freezeRotationY = false;
-    [SerializeField] private bool freezeRotationZ = true;   // normalmente sí congelamos el roll
+    [SerializeField] private bool freezeRotationZ = true;
+
+    // Color naranja-rojizo constante
+    private readonly Color laserColor = new Color(1f, 0.35f, 0.05f); // Naranja rojizo intenso
 
     private Rigidbody rb;
+    private bool isGrabbed = false;
+    private float nextFireTime = 0f;
 
     private void Awake()
     {
         rb = GetComponent<Rigidbody>();
-
-        // ... el resto del Awake que ya tenías ...
-
         ApplyConstraints();
+
         if (grabInteractable == null)
             grabInteractable = GetComponent<XRGrabInteractable>();
 
-        // Suscribirse a los eventos de agarre
         grabInteractable.selectEntered.AddListener(OnGrabbed);
         grabInteractable.selectExited.AddListener(OnReleased);
+
+        if (lineRenderer == null)
+        {
+            lineRenderer = gameObject.AddComponent<LineRenderer>();
+            SetupLineRenderer();
+        }
+        else
+        {
+            // Aseguramos el color aunque lo hayas asignado manualmente
+            ApplyLaserColor();
+        }
+
+        lineRenderer.enabled = false;
+    }
+
+    private void SetupLineRenderer()
+    {
+        lineRenderer.startWidth = 0.025f;
+        lineRenderer.endWidth = 0.012f;
+        lineRenderer.material = new Material(Shader.Find("Sprites/Default"));
+        lineRenderer.positionCount = 2;
+        ApplyLaserColor();
+    }
+
+    private void ApplyLaserColor()
+    {
+        lineRenderer.startColor = laserColor;
+        lineRenderer.endColor = laserColor;
     }
 
     private void ApplyConstraints()
@@ -45,23 +77,16 @@ public class TurretController : MonoBehaviour
 
         RigidbodyConstraints constraints = RigidbodyConstraints.None;
 
-        // Posición siempre congelada (recomendado)
         constraints |= RigidbodyConstraints.FreezePositionX;
         constraints |= RigidbodyConstraints.FreezePositionY;
         constraints |= RigidbodyConstraints.FreezePositionZ;
 
-        // Rotaciones
         if (freezeRotationX) constraints |= RigidbodyConstraints.FreezeRotationX;
         if (freezeRotationY) constraints |= RigidbodyConstraints.FreezeRotationY;
         if (freezeRotationZ) constraints |= RigidbodyConstraints.FreezeRotationZ;
 
         rb.constraints = constraints;
     }
-
-    private bool isGrabbed = false;
-    private float nextFireTime = 0f;
-
-  
 
     private void OnDestroy()
     {
@@ -74,7 +99,6 @@ public class TurretController : MonoBehaviour
 
     private void Update()
     {
-        // Solo dispara mientras esté agarrada
         if (isGrabbed && Time.time >= nextFireTime)
         {
             Shoot();
@@ -85,13 +109,13 @@ public class TurretController : MonoBehaviour
     private void OnGrabbed(SelectEnterEventArgs args)
     {
         isGrabbed = true;
-        Debug.Log("Torreta agarrada ? Disparo activado");
+        Debug.Log("Torreta agarrada â†’ Disparo activado");
     }
 
     private void OnReleased(SelectExitEventArgs args)
     {
         isGrabbed = false;
-        Debug.Log("Torreta soltada ? Disparo desactivado");
+        Debug.Log("Torreta soltada â†’ Disparo desactivado");
     }
 
     private void Shoot()
@@ -105,26 +129,43 @@ public class TurretController : MonoBehaviour
         Ray ray = new Ray(firePoint.position, firePoint.forward);
         RaycastHit hit;
 
+        Vector3 endPoint = firePoint.position + firePoint.forward * range;
+
         if (Physics.Raycast(ray, out hit, range, hitLayers))
         {
-            // Detectamos si el objeto tiene el tag "enemigo"
+            endPoint = hit.point;
+
             if (hit.collider.CompareTag("enemigo"))
             {
-                Debug.Log($"¡IMPACTO en enemigo! ? {hit.collider.gameObject.name}  (distancia: {hit.distance:F2}m)");
-
-                // Desactivamos el collider para que no vuelva a detectar el mismo enemigo
+                Debug.Log($"Â¡IMPACTO en enemigo! â†’ {hit.collider.gameObject.name}  (distancia: {hit.distance:F2}m)");
                 hit.collider.enabled = false;
-
-                // Opcional: si quieres desactivar TODOS los colliders del enemigo (por si tiene varios)
-                // Collider[] allColliders = hit.collider.GetComponentsInChildren<Collider>();
-                // foreach (var col in allColliders) col.enabled = false;
             }
         }
 
-        // Visualización del raycast
+        ShowLaser(firePoint.position, endPoint);
+
         if (showRay)
         {
-            Debug.DrawRay(firePoint.position, firePoint.forward * range, rayColor, fireRate);
+            Debug.DrawRay(firePoint.position, firePoint.forward * range, laserColor, fireRate);
         }
+    }
+
+    private void ShowLaser(Vector3 start, Vector3 end)
+    {
+        if (lineRenderer == null) return;
+
+        StopAllCoroutines();
+        StartCoroutine(LaserCoroutine(start, end));
+    }
+
+    private IEnumerator LaserCoroutine(Vector3 start, Vector3 end)
+    {
+        lineRenderer.enabled = true;
+        lineRenderer.SetPosition(0, start);
+        lineRenderer.SetPosition(1, end);
+
+        yield return new WaitForSeconds(laserDuration);
+
+        lineRenderer.enabled = false;
     }
 }
