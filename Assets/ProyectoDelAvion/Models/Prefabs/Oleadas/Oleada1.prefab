@@ -57,7 +57,7 @@ MonoBehaviour:
   - {fileID: 0}
   - {fileID: 0}
   loop: 1
-  moveSpeed: 15
+  moveSpeed: 20
   rotateSpeed: 5
   reachDistance: 0.3
 --- !u!1001 &1108240708507064090
