@@ -120,8 +120,32 @@ PrefabInstance:
     - {fileID: 6126938013068775417, guid: 651606bae133b0e4996b09cd6cb77949, type: 3}
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
-    m_AddedComponents: []
+    m_AddedComponents:
+    - targetCorrespondingSourceObject: {fileID: 2176726470737412094, guid: 651606bae133b0e4996b09cd6cb77949, type: 3}
+      insertIndex: -1
+      addedObject: {fileID: 4525958052061778371}
   m_SourcePrefab: {fileID: 100100000, guid: 651606bae133b0e4996b09cd6cb77949, type: 3}
+--- !u!1 &1248634250598476004 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 2176726470737412094, guid: 651606bae133b0e4996b09cd6cb77949, type: 3}
+  m_PrefabInstance: {fileID: 1108240708507064090}
+  m_PrefabAsset: {fileID: 0}
+--- !u!114 &4525958052061778371
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1248634250598476004}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: e766e2557272c134b8baa7fe3a043818, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::Movimiento
+  direccion: {x: 0, y: 2, z: 0}
+  distanciaMinima: 1
+  distanciaMaxima: 3
+  velocidad: 2
 --- !u!4 &1882463484965204574 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: 1548844224266265924, guid: 651606bae133b0e4996b09cd6cb77949, type: 3}
@@ -187,8 +211,32 @@ PrefabInstance:
     - {fileID: 6126938013068775417, guid: 651606bae133b0e4996b09cd6cb77949, type: 3}
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
-    m_AddedComponents: []
+    m_AddedComponents:
+    - targetCorrespondingSourceObject: {fileID: 2176726470737412094, guid: 651606bae133b0e4996b09cd6cb77949, type: 3}
+      insertIndex: -1
+      addedObject: {fileID: 3475568755732982463}
   m_SourcePrefab: {fileID: 100100000, guid: 651606bae133b0e4996b09cd6cb77949, type: 3}
+--- !u!1 &396682559719609940 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 2176726470737412094, guid: 651606bae133b0e4996b09cd6cb77949, type: 3}
+  m_PrefabInstance: {fileID: 1996226713307064746}
+  m_PrefabAsset: {fileID: 0}
+--- !u!114 &3475568755732982463
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 396682559719609940}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: e766e2557272c134b8baa7fe3a043818, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::Movimiento
+  direccion: {x: 0, y: 2, z: 0}
+  distanciaMinima: 1
+  distanciaMaxima: 3
+  velocidad: 2
 --- !u!4 &1065835799299116270 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: 1548844224266265924, guid: 651606bae133b0e4996b09cd6cb77949, type: 3}
@@ -254,13 +302,37 @@ PrefabInstance:
     - {fileID: 6126938013068775417, guid: 651606bae133b0e4996b09cd6cb77949, type: 3}
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
-    m_AddedComponents: []
+    m_AddedComponents:
+    - targetCorrespondingSourceObject: {fileID: 2176726470737412094, guid: 651606bae133b0e4996b09cd6cb77949, type: 3}
+      insertIndex: -1
+      addedObject: {fileID: 1388181937524814870}
   m_SourcePrefab: {fileID: 100100000, guid: 651606bae133b0e4996b09cd6cb77949, type: 3}
 --- !u!4 &5975481118274108562 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: 1548844224266265924, guid: 651606bae133b0e4996b09cd6cb77949, type: 3}
   m_PrefabInstance: {fileID: 5157666072056715734}
   m_PrefabAsset: {fileID: 0}
+--- !u!1 &6460128644763772456 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 2176726470737412094, guid: 651606bae133b0e4996b09cd6cb77949, type: 3}
+  m_PrefabInstance: {fileID: 5157666072056715734}
+  m_PrefabAsset: {fileID: 0}
+--- !u!114 &1388181937524814870
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 6460128644763772456}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: e766e2557272c134b8baa7fe3a043818, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::Movimiento
+  direccion: {x: 0, y: 2, z: 0}
+  distanciaMinima: 1
+  distanciaMaxima: 3
+  velocidad: 2
 --- !u!1001 &5366604176661447746
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -313,16 +385,46 @@ PrefabInstance:
       propertyPath: m_Name
       value: BF109 (3)
       objectReference: {fileID: 0}
+    - target: {fileID: 3736127906310542793, guid: 651606bae133b0e4996b09cd6cb77949, type: 3}
+      propertyPath: objetos.Array.data[0].objeto
+      value: 
+      objectReference: {fileID: 0}
     - target: {fileID: 6126938013068775417, guid: 651606bae133b0e4996b09cd6cb77949, type: 3}
       propertyPath: m_Enabled
       value: 0
       objectReference: {fileID: 0}
     m_RemovedComponents:
     - {fileID: 6126938013068775417, guid: 651606bae133b0e4996b09cd6cb77949, type: 3}
-    m_RemovedGameObjects: []
+    m_RemovedGameObjects:
+    - {fileID: 7987980043218331187, guid: 651606bae133b0e4996b09cd6cb77949, type: 3}
+    - {fileID: 5054551093979687110, guid: 651606bae133b0e4996b09cd6cb77949, type: 3}
     m_AddedGameObjects: []
-    m_AddedComponents: []
+    m_AddedComponents:
+    - targetCorrespondingSourceObject: {fileID: 2176726470737412094, guid: 651606bae133b0e4996b09cd6cb77949, type: 3}
+      insertIndex: -1
+      addedObject: {fileID: 2356178458862817278}
   m_SourcePrefab: {fileID: 100100000, guid: 651606bae133b0e4996b09cd6cb77949, type: 3}
+--- !u!1 &6075157029825461180 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 2176726470737412094, guid: 651606bae133b0e4996b09cd6cb77949, type: 3}
+  m_PrefabInstance: {fileID: 5366604176661447746}
+  m_PrefabAsset: {fileID: 0}
+--- !u!114 &2356178458862817278
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 6075157029825461180}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: e766e2557272c134b8baa7fe3a043818, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::Movimiento
+  direccion: {x: 0, y: 2, z: 0}
+  distanciaMinima: 1
+  distanciaMaxima: 3
+  velocidad: 2
 --- !u!4 &6846768363801600262 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: 1548844224266265924, guid: 651606bae133b0e4996b09cd6cb77949, type: 3}
