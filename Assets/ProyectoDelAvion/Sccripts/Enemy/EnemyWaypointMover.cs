@@ -11,6 +11,7 @@ public class EnemyWaypointMover : MonoBehaviour
     [SerializeField] private float rotateSpeed = 5f;
     [SerializeField] private float reachDistance = 0.3f; // Distancia para considerar que llegó al punto
 
+
     private int currentWaypointIndex = 0;
 
     private void Update()

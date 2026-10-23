@@ -66,9 +66,20 @@ public class WaveManager : MonoBehaviour
         Quaternion rotacion = puntoSpawn != null ? puntoSpawn.rotation : Quaternion.identity;
 
         GameObject instancia = Instantiate(prefab, posicion, rotacion);
+        instancia.SetActive(true);
+        HacerVisible(instancia);
 
         if (mostrarDebug)
             Debug.Log($"Oleada {indice + 1} activada: {prefab.name}");
+    }
+    private void HacerVisible(GameObject objeto)
+    {
+        // true = incluye hijos que estén inactivos
+        foreach (Renderer r in objeto.GetComponentsInChildren<Renderer>(true))
+        {
+            r.enabled = true;
+            r.gameObject.SetActive(true);
+        }
     }
 
     // Por si quieres detener el sistema (por ejemplo cuando termine el juego a los 2 minutos)

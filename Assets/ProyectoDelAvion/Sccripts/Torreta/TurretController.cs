@@ -9,6 +9,7 @@ public class TurretController : MonoBehaviour
     [SerializeField] private Transform firePoint;
     [SerializeField] private XRGrabInteractable grabInteractable;
     [SerializeField] private LineRenderer lineRenderer;
+    [SerializeField] private GameObject objetoAlDisparar; // <- NUEVO
 
     [Header("Configuración de disparo")]
     [SerializeField] private float fireRate = 0.15f;
@@ -54,6 +55,9 @@ public class TurretController : MonoBehaviour
         }
 
         lineRenderer.enabled = false;
+
+        if (objetoAlDisparar != null)
+            objetoAlDisparar.SetActive(false); // <- NUEVO
     }
 
     private void SetupLineRenderer()
@@ -109,12 +113,20 @@ public class TurretController : MonoBehaviour
     private void OnGrabbed(SelectEnterEventArgs args)
     {
         isGrabbed = true;
+
+        if (objetoAlDisparar != null)
+            objetoAlDisparar.SetActive(true); // <- NUEVO
+
         Debug.Log("Torreta agarrada → Disparo activado");
     }
 
     private void OnReleased(SelectExitEventArgs args)
     {
         isGrabbed = false;
+
+        if (objetoAlDisparar != null)
+            objetoAlDisparar.SetActive(false); // <- NUEVO
+
         Debug.Log("Torreta soltada → Disparo desactivado");
     }
 
@@ -138,7 +150,10 @@ public class TurretController : MonoBehaviour
             if (hit.collider.CompareTag("enemigo"))
             {
                 Debug.Log($"¡IMPACTO en enemigo! → {hit.collider.gameObject.name}  (distancia: {hit.distance:F2}m)");
-                hit.collider.enabled = false;
+
+                EnemyHitReaction reaction = hit.collider.GetComponentInParent<EnemyHitReaction>();
+                if (reaction != null)
+                    reaction.Hit();
             }
         }
 

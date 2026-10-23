@@ -11,9 +11,13 @@ public class GameTimer : MonoBehaviour
     public TextMeshProUGUI textoFinJuego;
 
     [Header("Seguimiento de la cabeza")]
-    public Transform cabezaJugador;          // Arrastra aquí la Main Camera (o XR Origin → Camera Offset → Main Camera)
+    public Transform cabezaJugador;          // Main Camera (o XR Origin → Camera Offset → Main Camera)
     public float distanciaFrente = 1.8f;     // Distancia a la que aparece el panel
     public float alturaOffset = 0f;          // Ajuste de altura (0 = a la altura de los ojos)
+
+    [Header("Cambio de cámara")]
+    public Camera camaraJuego;   // Cámara actual (si la dejas vacía, usa la Main Camera)
+    public Camera camaraFinal;   // Cámara a la que se cambia al terminar el timer
 
     private float tiempoRestante;
     private bool juegoTerminado = false;
@@ -32,6 +36,12 @@ public class GameTimer : MonoBehaviour
             if (cam != null)
                 cabezaJugador = cam.transform;
         }
+
+        if (camaraJuego == null)
+            camaraJuego = Camera.main;
+
+        if (camaraFinal != null)
+            camaraFinal.gameObject.SetActive(false); // Empieza apagada
     }
 
     void Update()
@@ -64,11 +74,30 @@ public class GameTimer : MonoBehaviour
         // Opcional: pausar el juego
         Time.timeScale = 0f;
 
+        // Cambia a la cámara final
+        CambiarCamara();
+
         // Posicionar inmediatamente
         SeguirMirada();
 
-        // Dentro de TerminarJuego()
         FindObjectOfType<WaveManager>()?.DetenerOleadas();
+    }
+
+    void CambiarCamara()
+    {
+        if (camaraFinal == null) return;
+
+        // Evita tener dos AudioListener activos
+        AudioListener listenerViejo = camaraJuego != null ? camaraJuego.GetComponent<AudioListener>() : null;
+        if (listenerViejo != null) listenerViejo.enabled = false;
+
+        if (camaraJuego != null)
+            camaraJuego.enabled = false;
+
+        camaraFinal.gameObject.SetActive(true);
+
+        // El panel ahora sigue a la cámara nueva
+        cabezaJugador = camaraFinal.transform;
     }
 
     void SeguirMirada()
